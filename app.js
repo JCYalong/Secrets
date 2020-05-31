@@ -1,3 +1,5 @@
+//jshint esversion:6
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -21,8 +23,7 @@ const userSchema = new mongoose.Schema ({
   password: String
 });
 
-const secret = "Thisisourlittlesecret."
-userSchema.plugin(encrypt, { secret: secret
+userSchema.plugin(encrypt, { secret: process.env.SECRET
   , encryptedFields: ["password"] });
 
 const User = new mongoose.model("User", userSchema);
@@ -83,4 +84,4 @@ app.route("/register")
 
 app.listen(3000, function() {
   console.log("Successfull connected to port 3000");
-});
+})
